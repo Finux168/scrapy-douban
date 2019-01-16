@@ -7,7 +7,7 @@
 
 from scrapy.item import Item,Field
 
-
+# 类似java中的实体类(model)
 class DoubanmcItem(Item):
     movieName = Field()
     reviewer = Field()

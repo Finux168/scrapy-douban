@@ -18,7 +18,32 @@ NEWSPIDER_MODULE = 'doubanMC.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'doubanMC (+http://www.yourdomain.com)'
 
+#如果不加,会被豆瓣屏蔽.
 USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
+
+#splash服务地址
+SPLASH_URL = 'http://127.0.0.1:8050'
+
+# 其中的pipeline是对item进行处理的.
+ITEM_PIPELINES = {
+   # 300 代表级别,越大越好
+   'doubanMC.pipelines.DoubanmcPipeline': 300,
+}
+
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy_splash.SplashCookiesMiddleware': 723,
+    'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
+
+SPIDER_MIDDLEWARES = {
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+}
+
+
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 
 # Obey robots.txt rules
 # ROBOTSTXT_OBEY = True
@@ -66,10 +91,6 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, lik
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-
-ITEM_PIPELINES = {
-   'doubanMC.pipelines.DoubanmcPipeline': 300,
-}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

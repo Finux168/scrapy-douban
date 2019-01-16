@@ -18,7 +18,7 @@ class DoubanmcPipeline(object):
     def process_item(self, item, spider):
         #OrderedDict将item对象序列化成字典,同时根据key进行排序
         #将item序列化成字符串,写入文件
-        line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=True) + "\n"
+        line = json.dumps(OrderedDict(item), ensure_ascii=False, sort_keys=False) + "\n"
         self.file.write(line)
         return item
 

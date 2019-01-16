@@ -10,3 +10,5 @@ movie review of graping Douban with scrapy framework
   3.使用docker安装scrapinghub/splash  
 运行:  
   进入到项目根目录下,运行scrapy crawl doubanmc即可.  
+
+本项目仅供学习使用,如做非法的事情,请及时删除.  

@@ -1,5 +1,5 @@
 # scrapy-douban
-movie review of graping Douban with scrapy framework
+movie review of graping Douban with scrapy framework  
 环境:  
   1.python2.7  
   2.scrapy latest  

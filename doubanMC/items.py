@@ -15,3 +15,4 @@ class DoubanmcItem(Item):
     reviewTopic = Field()
     reviewTitle = Field()
     reviewContent = Field()
+    createTime = Field()

@@ -43,19 +43,18 @@ class doubanMCSpiders(scrapy.Spider):
     """
 
     def start_requests(self):
-        #不使用ip的写法
+        #不使用ip代理的写法
         yield SplashRequest('https://movie.douban.com/review/best/', self.parse,endpoint='execute',args={'lua_source':self.script,'wait':2})
         #使用ip代理的写法---测试了多个网上提供的免费ip,但是访问豆瓣就报403的错误,猜想可能ip被封了,建议放到局域网内,不要使用ip代理
         # yield SplashRequest('https://movie.douban.com/review/best/', self.parse,endpoint='execute',args={'lua_source':self.script,'wait':2,'proxy':'http://119.101.116.4:9999'})
         #下面是使用scrapy原生请求的方式.
         # yield scrapy.Request('https://movie.douban.com/review/best/', callback=self.parse, meta={'proxy': 'http://119.101.116.4:9999'})
+
     def parse(self,response):
         items = []
         # 取css的格式类似jQuery
         reviewItems = response.css('.main.review-item')
-        tempItems = response.css('.review-content.clearfix')
         for reviewItem in reviewItems:
-            # print reviewItem
             item = DoubanmcItem()
             item['movieName']=reviewItem.css('a img::attr(title)').extract_first()
             item['reviewer']=reviewItem.css('header a.name::text').extract_first()

@@ -64,8 +64,9 @@ SPLASH_URL = 'http://127.0.0.1:8050'
 
 # 其中的pipeline是对item进行处理的.
 ITEM_PIPELINES = {
-   # 300 代表级别,越大越好
-   'doubanMC.pipelines.DoubanmcPipeline': 300,
+   # 300 代表级别,越大优先级越高
+   #  'doubanMC.pipelines.DoubanmcPipeline': 300,
+    'doubanMC.pipelines.MongoPipeline':400
 }
 
 DOWNLOADER_MIDDLEWARES = {
@@ -83,6 +84,14 @@ SPIDER_MIDDLEWARES = {
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
+
+# LOG_LEVEL，默认是DEBUG，即打印DEBUG, INFO, WARNING, ERROR，所有LOG信息
+LOG_LEVEL='INFO'
+
+#mongodb数据库配置
+MONGO_URI='mongodb://127.0.0.1:27017'
+MONGO_DB='scrapy_db'
+MONGO_COLL='douban'
 
 # Obey robots.txt rules
 # ROBOTSTXT_OBEY = True

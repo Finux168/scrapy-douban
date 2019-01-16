@@ -6,7 +6,8 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-
+import random
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
 
 class DoubanmcSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -56,17 +57,21 @@ class DoubanmcSpiderMiddleware(object):
         spider.logger.info('Spider opened: %s' % spider.name)
 
 
-class DoubanmcDownloaderMiddleware(object):
+class DoubanmcDownloaderMiddleware(UserAgentMiddleware):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
+    def __init__(self, agents):
+        self.agents = agents
 
     @classmethod
     def from_crawler(cls, crawler):
         # This method is used by Scrapy to create your spiders.
-        s = cls()
-        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
-        return s
+        # s = cls()
+        # crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
+        return cls(
+            agents=crawler.settings.get('USER_AGENTS')
+        )
 
     def process_request(self, request, spider):
         # Called for each request that goes through the downloader
@@ -78,7 +83,8 @@ class DoubanmcDownloaderMiddleware(object):
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
-        return None
+        agent = random.choice(self.agents)
+        request.headers['User-Agent'] = agent
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
